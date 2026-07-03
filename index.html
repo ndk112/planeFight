@@ -26,43 +26,8 @@
 
   <link rel="stylesheet" type="text/css" href="style.css"/>
 
-  <style>
-    #loading {
-      position: fixed; top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: #1a1a2e; z-index: 9999;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      transition: opacity 0.4s;
-      font-family: "Microsoft YaHei","PingFang SC",sans-serif;
-    }
-    #loading.done { opacity: 0; pointer-events: none; }
-    #loading .title { color: #4fc3f7; font-size: 24px; font-weight: bold; margin-bottom: 24px; }
-    #loading .bar-wrap {
-      width: 200px; height: 4px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 2px; overflow: hidden;
-    }
-    #loading .bar-fill {
-      height: 100%; width: 0;
-      background: linear-gradient(90deg, #4fc3f7, #29b6f6);
-      border-radius: 2px;
-      transition: width 0.3s ease-out;
-    }
-    #loading .text {
-      color: rgba(255,255,255,0.5);
-      font-size: 12px; margin-top: 12px; letter-spacing: 1px;
-    }
-  </style>
-
 </head>
 <body>
-  <div id="loading">
-    <div class="title">PlaneFight</div>
-    <div class="bar-wrap"><div class="bar-fill" id="bar"></div></div>
-    <div class="text" id="loadText">加载中...</div>
-  </div>
-
   <div id="GameDiv" cc_exact_fit_screen="true">
       <div id="Cocos3dGameContainer">
         <canvas id="GameCanvas" oncontextmenu="event.preventDefault()" tabindex="99"></canvas>
@@ -71,9 +36,7 @@
   
 
 <!-- Polyfills bundle. -->
-
 <script src="src/polyfills.bundle.js" charset="utf-8"> </script>
-
 
 <!-- SystemJS support. -->
 <script src="src/system.bundle.js" charset="utf-8"> </script>
@@ -82,37 +45,7 @@
 <script src="src/import-map.json" type="systemjs-importmap" charset="utf-8"> </script>
 
 <script>
-    var bar = document.getElementById('bar');
-    var txt = document.getElementById('loadText');
-
-    function setProgress(p, msg) {
-      bar.style.width = p + '%';
-      if (msg) txt.textContent = msg + ' (' + p + '%)';
-    }
-
-    var timer = setInterval(function() {
-      var w = parseInt(bar.style.width) || 0;
-      if (w < 85) {
-        w += Math.random() < 0.6 ? 1 : 0;
-        setProgress(w, '加载中');
-      }
-    }, 80);
-
-    System.import('./index.js').then(function() {
-      clearInterval(timer);
-      setProgress(100, '加载完成');
-      setTimeout(function() {
-        document.getElementById('loading').classList.add('done');
-        setTimeout(function() {
-          var el = document.getElementById('loading');
-          if (el) el.remove();
-        }, 400);
-      }, 400);
-    }).catch(function(err) {
-      clearInterval(timer);
-      setProgress(100, '加载失败');
-      console.error(err);
-    })
+    System.import('./index.js').catch(function(err) { console.error(err); })
 </script>
 
 </body>

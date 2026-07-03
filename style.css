@@ -41,8 +41,6 @@ body {
 
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
 canvas {
@@ -52,16 +50,6 @@ canvas {
 #GameDiv, #Cocos3dGameContainer, #GameCanvas {
   width: 100%;
   height: 100%;
-}
-
-/* 桌面端宽屏保持竖屏比例居中 */
-@media (min-aspect-ratio: 480/852) {
-  #GameDiv {
-    width: auto;
-    height: 100vh;
-    aspect-ratio: 480 / 852;
-    margin: 0 auto;
-  }
 }
 
 :root {
